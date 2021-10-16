@@ -23,25 +23,20 @@ class surat extends BaseController
 
     public function index()
     {
-        $mahasiswa = new ModelMhs();
-        $prodi = new ModelProdi();
-        $data['mahasiswa'] = $mahasiswa->ambilData();
-        $data['prodi'] = $prodi->getProdi();
+        $data = [
+            'mahasiswa' => $this->mhsModel->ambilData(),
+            'prodi' => $this->prodiModel->getProdi()
+        ];
         return view("tampilan/home", $data);
     }
 
     public function create()
     {
-        $mahasiswa = new ModelMhs();
-        $validation = \config\Services::validation();
         return view("tampilan/fill");
     }
 
     public function simpan()
     {
-        helper(['form', 'url']);
-        $mahasiswa = new ModelMhs();
-
         $dataSimpan = [
             'nim' => $this->request->getPost('nim'),
             'nama_mahasiswa' => $this->request->getPost('nama_mahasiswa'),
@@ -54,26 +49,22 @@ class surat extends BaseController
             'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
             'id_jenisSurat' => $this->request->getPost('id_jenisSurat')
         ];
-        $mahasiswa->save($dataSimpan);
+        $this->mhsModel->save($dataSimpan);
         return redirect()->to(base_url('/surat/index'));
     }
 
     public function hapus($no_surat)
     {
-        helper(['form', 'url']);
-
-        $mahasiswa = new ModelMhs();
-
-        $jumlahRecord = $mahasiswa->where('no_surat', $no_surat)->countAllResults();
+        $jumlahRecord =$this->mhsModel->where('no_surat', $no_surat)->countAllResults();
 
         if ($jumlahRecord == 1) {
-            $hapus = $mahasiswa->delete($no_surat);
+            $hapus = $this->mhsModel->delete($no_surat);
             $pesan = "Data berhasil dihapus";
         } else {
             $pesan = "Data yang ingin dihapus tidak ada dalam database";
         }
-        $data["mahasiswa"] = $mahasiswa->findAll();
-        $data["pesan"] = $pesan;
+
+        $data["mahasiswa"] = $this->mhsModel->findAll();
 
         return redirect()->to(base_url('surat/index'));
     }
