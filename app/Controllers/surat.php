@@ -55,7 +55,7 @@ class surat extends BaseController
 
     public function hapus($no_surat)
     {
-        $jumlahRecord =$this->mhsModel->where('no_surat', $no_surat)->countAllResults();
+        $jumlahRecord = $this->mhsModel->where('no_surat', $no_surat)->countAllResults();
 
         if ($jumlahRecord == 1) {
             $hapus = $this->mhsModel->delete($no_surat);
