@@ -33,8 +33,8 @@
           </thead>
           <tbody>
             <?php
-            $no = 1;
-            foreach ($mahasiswa as $row) {
+            $no = 1 + (2 * ($currentPage - 1));
+            foreach ($mahasiswa as $row) :
             ?>
               <tr style="text-align: center;">
 
@@ -52,9 +52,10 @@
                 </td>
               </tr>
 
-            <?php  } ?>
+            <?php  endforeach; ?>
           </tbody>
         </table>
+        <?= $pager->links('mahasiswa', 'mhs_pagination'); ?>
       </div>
     </div>
   </div>

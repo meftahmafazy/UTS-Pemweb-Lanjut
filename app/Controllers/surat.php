@@ -23,9 +23,14 @@ class surat extends BaseController
 
     public function index()
     {
+        $currentPage = $this->request->getVar('page_mahasiswa') ?  $this->request->getVar('page_mahasiswa') : 
+        1;
+
         $data = [
             'mahasiswa' => $this->mhsModel->ambilData(),
-            'prodi' => $this->prodiModel->getProdi()
+            'pager' => $this->mhsModel->pager,
+            'prodi' => $this->prodiModel->getProdi(),
+            'currentPage' => $currentPage
         ];
         return view("tampilan/home", $data);
     }
