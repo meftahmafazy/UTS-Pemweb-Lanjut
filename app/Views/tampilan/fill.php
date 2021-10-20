@@ -23,109 +23,133 @@ use App\Models\ModelSurat;
           <!-- Nama -->
           <div class="form-group col-md-6">
             <label for="inputName">Nama</label>
-            <input type="text" class="form-control" id="inputEmail4" name="nama_mahasiswa" required>
+            <input type="text" class="form-control  <?= ($validation->hasError('nama_mahasiswa')) ? 'is-invalid' : ''; ?>" id="inputEmail4" name="nama_mahasiswa">
+            <div id="validationServer03Feedback" class="invalid-feedback">
+              <?= $validation->getError('nama_mahasiswa') ?>
+            </div>
           </div>
 
           <!-- NIM -->
           <div class="form-group col-md-6">
             <label for="inputPassword4">NIM</label>
-            <input type="text" class="form-control" id="inputPassword4" name="nim" required>
-          </div>
-        </div>
-
-
-        <div class="form-group">
-          <!-- Email -->
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputEmail4">Email</label>
-              <input type="email" class="form-control" id="inputEmail4" name="email" required>
-            </div>
-
-            <!-- No HP -->
-            <div class="form-group col-md-6">
-              <label for="inputPassword4">Angkatan</label>
-              <input type="text" class="form-control" id="inputPassword4" name="angkatan" required>
+            <input type="text" class="form-control <?= ($validation->hasError('nim')) ? 'is-invalid' : ''; ?>" id="inputPassword4" name="nim">
+            <div id="validationServer03Feedback" class="invalid-feedback">
+              <?= $validation->getError('nama_mahasiswa') ?>
             </div>
           </div>
 
-          <!-- Keperluan -->
+
           <div class="form-group">
+            <!-- Email -->
             <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">Email</label>
+                <input type="email" class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" id="inputEmail4" name="email">
+                <div id="validationServer03Feedback" class="invalid-feedback">
+                  <?= $validation->getError('nama_mahasiswa') ?>
+                </div>
+              </div>
+
+              <!-- No HP -->
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Angkatan</label>
+                <input type="text" class="form-control <?= ($validation->hasError('angkatan')) ? 'is-invalid' : ''; ?>" id="inputPassword4" name="angkatan">
+                <div id="validationServer03Feedback" class="invalid-feedback">
+                  <?= $validation->getError('angkatan') ?>
+                </div>
+              </div>
 
               <!-- Keperluan -->
-              <div class="form-group col-md-6">
-                <label for="inputAddress">Keperluan</label>
-                <input type="text" class="form-control" id="inputAddress" name="keperluan" required>
-              </div>
-
-              <!-- Tanggal Surat -->
-              <div class="form-group col-md-6">
-                <label for="inputAddress">Tanggal Surat</label>
-                <div class="input-group input-daterange"> <input type="date" id="start" class="form-control" name="tanggal_surat" required></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Prodi -->
-          <div class="form-group">
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="inputState">Program Studi</label>
-                <select id="inputState" class="form-control" name="prodi" required>
-                  <option selected>Choose...</option>
-                  <?php
-                  $Prodi = new ModelProdi();
-                  $dataProdi = $Prodi->getProdi();
-                  foreach ($dataProdi as $row) {
-                  ?>
-                    <option value="<?= $row['id_prodi'] ?>"> <?= $row['nama_prodi'] ?></option>
-                  <?php } ?>
-                </select>
-              </div>
-
               <div class="form-group">
                 <div class="form-row">
 
-                  <!-- Semester -->
-                  <div class="form-group col-md-4">
-                    <label for="inputState">Semester</label>
-                    <input type="text" class="form-control" name="semester" id="inputAddress" placeholder="II" required>
+                  <!-- Keperluan -->
+                  <div class="form-group col-md-6">
+                    <label for="inputAddress">Keperluan</label>
+                    <input type="text" class="form-control <?= ($validation->hasError('keperluan')) ? 'is-invalid' : ''; ?>" id="inputAddress" name="keperluan">
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                      <?= $validation->getError('keperluan') ?>
+                    </div>
                   </div>
 
-                  <!-- Jenis Surat -->
+                  <!-- Tanggal Surat -->
+                  <div class="form-group col-md-6">
+                    <label for="inputAddress">Tanggal Surat</label>
+                    <div class="input-group input-daterange"> <input type="date" id="start" class="form-control" name="tanggal_surat"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Prodi -->
+              <div class="form-group">
+                <div class="form-row">
                   <div class="form-group col-md-4">
-                    <label for="inputState">Jenis Surat</label>
-                    <select id="inputState" class="form-control" name="id_jenisSurat" required>
+                    <label for="inputState">Program Studi</label>
+                    <select id="inputState" class="form-control" name="prodi">
                       <option selected>Choose...</option>
                       <?php
-                      $Surat = new ModelSurat();
-                      $dataProdi = $Surat->getSurat();
+                      $Prodi = new ModelProdi();
+                      $dataProdi = $Prodi->getProdi();
                       foreach ($dataProdi as $row) {
                       ?>
-                        <option value="<?= $row['id_jenisSurat'] ?>"> <?= $row['nama_jenisSurat'] ?></option>
+                        <option value="<?= $row['id_prodi'] ?>"> <?= $row['nama_prodi'] ?></option>
                       <?php } ?>
                     </select>
                   </div>
 
-                  <!-- Jenis Kelamin -->
-                  <div class="form-group col-md-4">
-                    <label for="">Jenis Kelamin</label>
+                  <div class="form-group">
                     <div class="form-row">
-                      <div class="form-check">
-                        <input type="radio" name="jenis_kelamin" id="exampleRadios2" value="Laki-Laki" required>
-                        <label class="form-check-label" for="exampleRadios2">
-                          Laki-Laki
-                        </label>
-                        <input type="radio" name="jenis_kelamin" id="exampleRadios2" value="Perempuan" required>
-                        <label class="form-check-label" for="exampleRadios2">
-                          Perempuan
-                        </label>
+
+                      <!-- Semester -->
+                      <div class="form-group col-md-4">
+                        <label for="inputState">Semester</label>
+                        <input type="text" class="form-control <?= ($validation->hasError('semester')) ? 'is-invalid' : ''; ?>" name="semester" id="inputAddress" placeholder="II">
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          <?= $validation->getError('semester') ?>
+                        </div>
+                      </div>
+
+                      <!-- Jenis Surat -->
+                      <div class="form-group col-md-4">
+                        <label for="inputState">Jenis Surat</label>
+                        <select id="inputState" class="form-control" name="id_jenisSurat">
+                          <option selected>Choose...</option>
+                          <?php
+                          $Surat = new ModelSurat();
+                          $dataProdi = $Surat->getSurat();
+                          foreach ($dataProdi as $row) {
+                          ?>
+                            <option value="<?= $row['id_jenisSurat'] ?>"> <?= $row['nama_jenisSurat'] ?></option>
+                          <?php } ?>
+                        </select>
+                      </div>
+
+                      <!-- Jenis Kelamin -->
+                      <div class="form-group col-md-4">
+                        <label for="">Jenis Kelamin</label>
+                        <div class="form-row">
+                          <div class="form-check">
+                            <input type="radio" name="jenis_kelamin" id="exampleRadios2" value="Laki-Laki">
+                            <label class="form-check-label" for="exampleRadios2">
+                              Laki-Laki
+                            </label>
+                            <input type="radio" name="jenis_kelamin" id="exampleRadios2" value="Perempuan">
+                            <label class="form-check-label" for="exampleRadios2">
+                              Perempuan
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Input File -->
+                      <div class="form-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="foto_mhs" name="foto_mhs">
+                          <label class="custom-file-label" for="customFile">Masukkan Pasfoto Anda</label>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
       </form>
 
@@ -135,7 +159,7 @@ use App\Models\ModelSurat;
     <button type="submit" class="btn btn-primary" name="daftar">Simpan</button>
     <button type="reset" class="btn btn-danger" name="daftar">Ulang</button>
   </center>
-  
+
 </div>
 
 <?= $this->endSection(); ?>

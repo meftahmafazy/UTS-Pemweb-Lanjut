@@ -22,6 +22,7 @@
             <tr class="bg-primary" style="text-align: center;">
 
               <th scope="col">Nomor Surat</th>
+              <th scope="col">Pasfoto Mahasiswa</th>
               <th scope="col">Nama Mahasiswa</th>
               <th scope="col">NIM</th>
               <th scope="col">Program Studi</th>
@@ -39,6 +40,7 @@
               <tr style="text-align: center;">
 
                 <td><?= $no++; ?></td>
+                <td><?= $row['foto_mhs'] ?></td>
                 <td><?= $row['nama_mahasiswa'] ?></td>
                 <td><?= $row['nim'] ?></td>
                 <td><?= $row['nama_prodi'] ?></td>
@@ -55,7 +57,7 @@
             <?php  endforeach; ?>
           </tbody>
         </table>
-        <?= $pager->links('mahasiswa', 'mhs_pagination'); ?>
+        <?= $pager->simpleLinks('mahasiswa', 'mhs_pagination'); ?>
       </div>
     </div>
   </div>

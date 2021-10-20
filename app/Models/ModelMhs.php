@@ -8,7 +8,7 @@ class ModelMhs extends Model
 {
     protected $table = 'mahasiswa';
     protected $primaryKey = 'no_surat';
-    protected $allowedFields = ['nim', 'nama_mahasiswa', 'id_prodi', 'semester', 'jenis_kelamin', 'angkatan', 'email', 'tanggal_surat', 'id_jenisSurat', 'keperluan', 'file_surat'];
+    protected $allowedFields = ['foto_mhs','nim', 'nama_mahasiswa', 'id_prodi', 'semester', 'jenis_kelamin', 'angkatan', 'email', 'tanggal_surat', 'id_jenisSurat', 'keperluan', 'file_surat'];
 
     public function ambilData()
     {
