@@ -51,7 +51,7 @@ class surat extends BaseController
                 'rules' => 'required|max_length[13]|integer',
                 'errors' => [
                     'required' => '{field} harus diisi!',
-                    'max_length[13]' => '{field} maksimal 13 angka!',
+                    'max_length' => '{field} maksimal 13 angka!',
                     'integer' => '{field} berupa angka!'
                 ]
             ],
@@ -76,8 +76,8 @@ class surat extends BaseController
             'angkatan' => [
                 'rules' => 'required|max_length[4]',
                 'errors' => [
-                    'required' => '{field} harus diisi sesuai tahun andak masuk!',
-                    'max_length[4]' => '{field} maksimal 4 angka!'
+                    'required' => '{field} harus diisi sesuai tahun anda masuk!',
+                    'max_length' => '{field} maksimal 4 angka!'
                 ]
             ],
             'keperluan' => [
@@ -86,43 +86,33 @@ class surat extends BaseController
                     'required' => '{field} harus diisi'
                 ]
             ],
-            'tanggal_surat' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} harus diisi tanggal anda mengajukan surat'
-                ]
-            ],
-            'id_prodi' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} harus dipilih'
-                ]
-            ],
-            'jenis_kelamin' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} harus dipilih'
-                ]
-            ],
-            'id_jenisSurat' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} harus dipilih'
-                ]
-            ],
             'foto_mhs' => [
-                'rules' => 'required',
+                'rules' => 'max_size[foto_mhs,5120]|ext_in[foto_mhs,jpg,png,jpeg,docx,pdf]',
                 'errors' => [
-                    'required' => '{field} harus diisi'
+                    'max_size' => 'ukuran gambar/dokumen terlalu besar',
+                    'ext_in' => 'Yang anda upload bukan gambar atau dokumen',
                 ]
             ],
         ])) {
-            $validation =  \Config\Services::validation();
-            return redirect()->to(base_url('/surat/create'))->withInput()->with('validation', $validation);
+            return redirect()->to(base_url('/surat/create'))->withInput();
+        }
+
+        // ambil gambar
+        $fileFoto = $this->request->getFile('foto_mhs');
+
+        if ($fileFoto->getError() == 4) {
+            $namaFoto = 'default_user.png';
+        } else {
+            // generate nama file secara random
+            $namaFoto = $fileFoto->getRandomName();
+
+            // pindah ke folder gambar
+            $fileFoto->move('img/upload/', $namaFoto);
         }
 
         $dataSimpan = [
             'nim' => $this->request->getPost('nim'),
+            'foto_mhs' => $namaFoto,
             'nama_mahasiswa' => $this->request->getPost('nama_mahasiswa'),
             'semester' => $this->request->getPost('semester'),
             'email' => $this->request->getPost('email'),
@@ -132,7 +122,6 @@ class surat extends BaseController
             'id_prodi' => $this->request->getPost('prodi'),
             'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
             'id_jenisSurat' => $this->request->getPost('id_jenisSurat'),
-            'foto_mhs' => $this->request->getPost('foto_mhs')
         ];
         $this->mhsModel->save($dataSimpan);
         return redirect()->to(base_url('/surat/index'));
@@ -140,6 +129,15 @@ class surat extends BaseController
 
     public function hapus($no_surat)
     {
+        // cari gambar
+        $mhs = $this->mhsModel->find($no_surat);
+
+        if ($mhs['foto_mhs'] != 'default_user.png') {
+            unlink('img/upload/' . $mhs['foto_mhs']);
+        }
+
+        // Hapus gambar
+
         $jumlahRecord = $this->mhsModel->where('no_surat', $no_surat)->countAllResults();
 
         if ($jumlahRecord == 1) {
@@ -170,6 +168,29 @@ class surat extends BaseController
 
     public function update($no_surat)
     {
+        if (!$this->validate([
+            'foto_mhs' => [
+                'rules' => 'max_size[foto_mhs,5120]|ext_in[foto_mhs,jpg,png,jpeg,docx,pdf]',
+                'errors' => [
+                    'max_size' => 'ukuran gambar/dokumen terlalu besar',
+                    'ext_in' => 'Yang anda upload bukan gambar atau dokumen',
+                ]
+            ],
+        ])) {
+            return redirect()->to(base_url('/surat/edit'))->withInput();
+        }
+        // ambil gambar
+        $fileFoto = $this->request->getFile('foto_mhs');
+
+        if ($fileFoto->getError() == 4) {
+            $namaFoto = 'default_user.png';
+        } else {
+            // generate nama file secara random
+            $namaFoto = $fileFoto->getRandomName();
+
+            // pindah ke folder gambar
+            $fileFoto->move('img/upload/', $namaFoto);
+        }
         $this->mhsModel->update($no_surat, [
             'nim' => $this->request->getVar('nim'),
             'nama_mahasiswa' => $this->request->getVar('nama_mahasiswa'),
@@ -181,7 +202,7 @@ class surat extends BaseController
             'id_prodi' => $this->request->getVar('prodi'),
             'jenis_kelamin' => $this->request->getVar('jenis_kelamin'),
             'id_jenisSurat' => $this->request->getVar('id_jenisSurat'),
-            'foto_mhs' => $this->request->getVar('foto_mhs')
+            'foto_mhs' => $namaFoto
         ]);
         session()->setFlashdata('pesan', 'Data berhasil diedit');
         return redirect()->to('surat/index');
