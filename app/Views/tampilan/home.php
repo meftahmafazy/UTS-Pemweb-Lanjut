@@ -45,7 +45,6 @@
                   <?php
                   $file = explode('.', $row['foto_mhs']);
                   $ext = ['png', 'jpg', 'jpeg'];
-                  // dd($file);
                   if (in_array($file[1], $ext)) {
                     echo '<img src="' . base_url('img/upload/' . $row['foto_mhs']) . '"  class="gambar" width="80px">';
                   } else {

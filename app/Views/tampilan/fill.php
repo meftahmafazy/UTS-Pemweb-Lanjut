@@ -109,9 +109,7 @@ use App\Models\ModelSurat;
               <select id="inputState" class="form-control" name="prodi" value="<?= old('prodi'); ?>" required>
                 <option selected>Choose...</option>
                 <?php
-                $Prodi = new ModelProdi();
-                $dataProdi = $Prodi->getProdi();
-                foreach ($dataProdi as $row) {
+                foreach ($prodi as $row) {
                 ?>
                   <option value="<?= $row['id_prodi'] ?>"> <?= $row['nama_prodi'] ?></option>
                 <?php } ?>
@@ -124,9 +122,7 @@ use App\Models\ModelSurat;
               <select id="inputState" class="form-control" name="id_jenisSurat" value="<?= old('id_jenisSurat'); ?>" required>
                 <option selected>Choose...</option>
                 <?php
-                $Surat = new ModelSurat();
-                $dataSurat = $Surat->getSurat();
-                foreach ($dataSurat as $row) {
+                foreach ($surat as $row) {
                 ?>
                   <option value="<?= $row['id_jenisSurat'] ?>"> <?= $row['nama_jenisSurat'] ?></option>
                 <?php } ?>
@@ -140,9 +136,6 @@ use App\Models\ModelSurat;
                 <option selected>Choose...</option>
                 <option name="jenis_kelamin" value="Laki-Laki">Laki-Laki</option>
                 <option name="jenis_kelamin" value="Perempuan">Perempuan</option>
-
-
-
               </select>
             </div>
           </div>

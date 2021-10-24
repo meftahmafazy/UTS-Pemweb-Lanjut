@@ -98,9 +98,7 @@ use App\Models\ModelSurat;
               <select id="inputState" class="form-control" name="prodi" value="<?= old('prodi'); ?>" required>
                 <option selected>Choose...</option>
                 <?php
-                $Prodi = new ModelProdi();
-                $dataProdi = $Prodi->getProdi();
-                foreach ($dataProdi as $row) {
+                foreach ($prodi as $row) {
                 ?>
                   <option value="<?= $row['id_prodi'] ?> " <?php echo ($mahasiswa['id_prodi'] == $row['id_prodi']) ? "selected" : " " ?>>
                     <?= $row['nama_prodi'] ?>
@@ -115,9 +113,9 @@ use App\Models\ModelSurat;
               <select id="inputState" class="form-control" name="id_jenisSurat" value="<?= old('id_jenisSurat'); ?>" required>
                 <option selected>Choose...</option>
                 <?php
-                $Surat = new ModelSurat();
-                $dataSurat = $Surat->getSurat();
-                foreach ($dataSurat as $row) {
+                // $Surat = new ModelSurat();
+                // $dataSurat = $Surat->getSurat();
+                foreach ($surat as $row) {
                 ?>
                   <option value="<?= $row['id_jenisSurat'] ?> " <?php echo ($mahasiswa['id_jenisSurat'] == $row['id_jenisSurat']) ? "selected" : " " ?>>
                     <?= $row['nama_jenisSurat'] ?>
@@ -153,8 +151,6 @@ use App\Models\ModelSurat;
             <div class="col-md-10">
               <div class="custom-file">
                 <input type="file" class="custom-file-input <?= ($validation->hasError('foto_mhs')) ? 'is-invalid' : ''; ?>" id="foto_mhs" name="foto_mhs" value="<?= $mahasiswa['foto_mhs'] ?>" onchange="previewImg()">
-
-
               </div>
               <label class="custom-file-label" for="foto_mhs"><?= $mahasiswa['foto_mhs'] ?></label>
             </div>

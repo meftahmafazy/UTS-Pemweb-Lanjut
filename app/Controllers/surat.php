@@ -30,6 +30,7 @@ class surat extends BaseController
             'mahasiswa' => $this->mhsModel->ambilData(),
             'pager' => $this->mhsModel->pager,
             'prodi' => $this->prodiModel->getProdi(),
+            'surat' => $this->suratModel->getSurat(),
             'currentPage' => $currentPage
         ];
         return view("tampilan/home", $data);
