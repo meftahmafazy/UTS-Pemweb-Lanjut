@@ -9,7 +9,7 @@ class ModelProdi extends Model
 
     protected $table = 'prodi';
     protected $primaryKey = 'id_prodi';
-    protected $allowedFields = ['nama_prodi'];
+    protected $allowedFields = ['nama_prodi', 'tanggal_berdiri', 'prodi_created_at'];
 
     public function __construct()
     {

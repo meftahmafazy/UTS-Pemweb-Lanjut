@@ -17,7 +17,7 @@ use App\Models\ModelSurat;
     <div class="col">
 
       <!-- Form -->
-      <form action="<?= base_url('/surat/update/' . $mahasiswa['no_surat']) ?>" method="POST" enctype="multipart/form-data">
+      <form action="<?= base_url('/register/update/' . $mahasiswa['no_surat']) ?>" method="POST" enctype="multipart/form-data">
 
         <input type="hidden" name="fotoLama" value="<?= $mahasiswa['foto_mhs']; ?>">
         <!-- Baris 1 -->

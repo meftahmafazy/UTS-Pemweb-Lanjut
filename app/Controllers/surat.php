@@ -39,6 +39,9 @@ class surat extends BaseController
     public function create()
     {
         $data = [
+            'mahasiswa' => $this->mhsModel->ambilData(),
+            'prodi' => $this->prodiModel->getProdi(),
+            'surat' => $this->suratModel->getSurat(),
             'validation' => \Config\Services::validation()
         ];
         return view("tampilan/fill", $data);
@@ -133,11 +136,11 @@ class surat extends BaseController
         // cari gambar
         $mhs = $this->mhsModel->find($no_surat);
 
+        // Hapus Gambar
         if ($mhs['foto_mhs'] != 'default_user.png') {
             unlink('img/upload/' . $mhs['foto_mhs']);
         }
 
-        // Hapus gambar
 
         $jumlahRecord = $this->mhsModel->where('no_surat', $no_surat)->countAllResults();
 
@@ -183,13 +186,14 @@ class surat extends BaseController
         // ambil gambar
         $fileFoto = $this->request->getFile('foto_mhs');
 
+        // Pengecekan Kondisi Gambar
         if ($fileFoto->getError() == 4) {
             $namaFoto = 'default_user.png';
         } else {
             // generate nama file secara random
             $namaFoto = $fileFoto->getRandomName();
 
-            // pindah ke folder gambar
+            // memindahkan ke folder gambar
             $fileFoto->move('img/upload/', $namaFoto);
         }
         $this->mhsModel->update($no_surat, [

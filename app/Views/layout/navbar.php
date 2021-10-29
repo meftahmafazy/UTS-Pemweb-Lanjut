@@ -8,6 +8,7 @@
       <div class="navbar-nav">
         <a class="nav-link" href="<?= base_url('/surat/index') ?>">Data Surat</a>
         <a class="nav-link" href="<?= base_url('/surat/create') ?>">Tambah Surat</a>
+        <a class="nav-link" href="<?= base_url('/login/logout') ?>">Logout</a>
       </div>
     </div>
   </div>
