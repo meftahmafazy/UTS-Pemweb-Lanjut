@@ -35,12 +35,12 @@ class Filters extends BaseConfig
 			// 'csrf',
 			'admin' => [
 				'except' => [
-					'login', 'login/*'
+					'/', '/login/*'
 				]
 			],
 			'user' => [
 				'except' => [
-					'login', 'login/*'
+					'/', '/login/*'
 				]
 			]
 
@@ -48,12 +48,12 @@ class Filters extends BaseConfig
 		'after'  => [
 			'admin' => [
 				'except' => [
-					'admin', 'admin/*', 'login', 'login/*'
+					'Admin', 'Admin/*', 'Login', 'Login/*'
 				]
 			],
 			'user' => [
 				'except' => [
-					'surat', 'surat/*', 'login', 'login/*'
+					'Surat', 'Surat/*', 'Login', 'Login/*'
 				]
 			],
 			'toolbar',

@@ -16,7 +16,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * Router Setup
  * --------------------------------------------------------------------
  */
-$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultNamespace('');
 $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
@@ -31,9 +31,26 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'login::index');
-$routes->get('/index', 'surat::index', ['filter' => 'auth']);
+$routes->get('/', 'App\Modules\Auth\Controllers\Login::index');
 
+// Auth
+$routes->get('login', 'App\Modules\Auth\Controllers\Login::index');
+$routes->add('login/(:any)', 'App\Modules\Auth\Controllers\Login::$1');
+$routes->get('register', 'App\Modules\Auth\Controllers\Register::index');
+$routes->add('register/(:any)', 'App\Modules\Auth\Controllers\Register::$1');
+
+
+// User
+$routes->get('surat', 'App\Modules\User\Controllers\Surat::index');
+$routes->add('surat/(:any)', 'App\Modules\User\Controllers\Surat::$1');
+
+// Admin
+$routes->get('admin', 'App\Modules\Admin\Controllers\Admin::indexSurat');
+$routes->add('admin/(:any)', 'App\Modules\Admin\Controllers\Admin::$1');
+$routes->get('pengguna', 'App\Modules\Admin\Controllers\Pengguna::tampil');
+$routes->add('pengguna/(:any)', 'App\Modules\Admin\Controllers\Pengguna::$1');
+$routes->get('prodi', 'App\Modules\Admin\Controllers\Prodi::index');
+$routes->add('prodi/(:any)', 'App\Modules\Admin\Controllers\Prodi::$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing
