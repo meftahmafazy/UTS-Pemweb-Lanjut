@@ -1,5 +1,5 @@
 # CodeIgniter 4 Application Starter
-Projek Portal Surat Pemrograman Web Lanjut
+Proyek Portal Surat Pemrograman Web Lanjut
 
 
 ## What is CodeIgniter?
